@@ -25,11 +25,12 @@ export class ProductsService {
     return this.productsModel.findOne({ _id: id })
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
+  update(id: string | number, updateProductDto: UpdateProductDto) {
     return `This action updates a #${id} product`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  remove(id: string | number) {
+    // return `This action removes a #${id} product`;
+    return this.productsModel.deleteOne({ _id: id })
   }
 }
