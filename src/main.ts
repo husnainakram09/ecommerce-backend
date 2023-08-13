@@ -6,7 +6,7 @@ import * as multer from 'multer';
 
 async function bootstrap() {
   // const app = await NestFactory.create(AppModule);
-  const expressApp: express.Application = express();
+  const expressApp: any = express();
   const app = await NestFactory.create(
     AppModule,
     new ExpressAdapter(expressApp),
