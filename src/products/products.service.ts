@@ -9,10 +9,11 @@ import { Product, ProductDocument } from './schema/products';
 export class ProductsService {
   constructor(@InjectModel(Product.name) private productsModel: Model<ProductDocument>) { }
 
-  create(createProductDto: CreateProductDto): Promise<Product> {
+  async create(createProductDto: CreateProductDto): Promise<Product> {
     const model = new this.productsModel()
     model.name = createProductDto.name
     model.price = createProductDto.price
+    model.image = createProductDto.image
     return model.save();
   }
 
@@ -20,9 +21,12 @@ export class ProductsService {
     return this.productsModel.find()
   }
 
-  findOne(id: string | number) {
+  async findOne(id: string | number) {
     // return `This action returns a #${id} product`;
-    return this.productsModel.findOne({ _id: id })
+    const product: any = await this.productsModel.findById(id);
+    const newproduct = { ...product._doc, image: product._doc.image.toString('base64') }
+    // console.log(product)
+    return newproduct
   }
 
   update(id: string | number, updateProductDto: UpdateProductDto) {
