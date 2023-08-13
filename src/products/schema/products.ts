@@ -11,7 +11,6 @@ export class Product {
     price: string
     @Prop()
     image: Buffer
-
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product)
