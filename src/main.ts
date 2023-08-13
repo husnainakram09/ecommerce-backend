@@ -6,10 +6,10 @@ import * as multer from 'multer';
 
 async function bootstrap() {
   // const app = await NestFactory.create(AppModule);
-  const expressApp = express() as express.Application
+  // const expressApp = express() as express.Application
   const app = await NestFactory.create(
     AppModule,
-    new ExpressAdapter(expressApp),
+    new ExpressAdapter(express()),
   );
   // Multer configuration
   const storage = multer.memoryStorage(); // Store images in memory
