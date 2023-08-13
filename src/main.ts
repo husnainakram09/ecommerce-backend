@@ -1,15 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ExpressAdapter } from '@nestjs/platform-express';
-import * as express from 'express';
 import * as multer from 'multer';
+import { createExpressAdapter } from './express.adapter';
 
 async function bootstrap() {
   // const app = await NestFactory.create(AppModule);
-  const expressApp: any = express();
   const app = await NestFactory.create(
     AppModule,
-    new ExpressAdapter(expressApp),
+    createExpressAdapter()
   );
   // Multer configuration
   const storage = multer.memoryStorage(); // Store images in memory
