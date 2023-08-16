@@ -5,11 +5,11 @@ import * as express from 'express';
 import * as multer from 'multer';
 
 const expressApp = express();
-async function bootstrap() {
+const bootstrap = async (expressInstance): Promise<void> => {
   // const app = await NestFactory.create(AppModule);
   const app = await NestFactory.create(
     AppModule,
-    new ExpressAdapter(expressApp),
+    new ExpressAdapter(expressInstance),
   );
   // Multer configuration
   const storage = multer.memoryStorage(); // Store images in memory
@@ -19,4 +19,4 @@ async function bootstrap() {
 
   await app.listen(3000);
 }
-bootstrap();
+bootstrap(expressApp);
