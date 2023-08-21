@@ -17,7 +17,7 @@ import { ProductsModule } from './products/products.module';
       inject: [ConfigService]
     }),
     AuthModule,
-    ProductsModule
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

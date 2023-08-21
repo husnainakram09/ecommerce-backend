@@ -4,12 +4,15 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Product, ProductDocument } from './schema/products';
+import { HttpService } from '@nestjs/axios';
+import { ImageService } from 'src/image/image.service';
 
 @Injectable()
 export class ProductsService {
-  constructor(@InjectModel(Product.name) private productsModel: Model<ProductDocument>) { }
+  constructor(
+    @InjectModel(Product.name) private productsModel: Model<ProductDocument>, private imageService: ImageService) { }
 
-  async create(createProductDto: CreateProductDto): Promise<Product> {
+  create(createProductDto: CreateProductDto): Promise<Product> {
     const model = new this.productsModel()
     model.name = createProductDto.name
     model.price = createProductDto.price
@@ -17,8 +20,16 @@ export class ProductsService {
     return model.save();
   }
 
-  findAll() {
-    return this.productsModel.find()
+  async findAll() {
+    const products: any = await this.productsModel.find()
+    const productsWithImage = await Promise.all(
+      products?.map(async (product) => {
+        const res = await this.imageService.findOne(product.image)
+
+        return await { ...product._doc, image: res }
+      })
+    )
+    return productsWithImage
   }
 
   async findOne(id: string | number) {
