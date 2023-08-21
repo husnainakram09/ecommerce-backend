@@ -22,7 +22,7 @@ export class Product {
     @Prop()
     specialOffer: boolean
     @Prop()
-    oldPrice?: string | number
+    oldPrice?: string
     @Prop()
     category: string
 }
