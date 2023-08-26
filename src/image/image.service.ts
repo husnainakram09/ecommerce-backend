@@ -33,15 +33,16 @@ export class ImageService {
   }
 
   async findOne(id: number | string): Promise<any> {
-    const imageData = await this.imageModel.findById(id)
+    const imageData: any = await this.imageModel.findById(id)
     const base64String = imageData.image.toString('base64');
     const binaryData = atob(base64String);
 
     // Convert binary data to a Blob
-    const blob = new Blob([binaryData], { type: imageData.mimetype })
+    // const blob = new Blob([binaryData], { type: imageData.mimetype })
 
-    console.log(blob, JSON.stringify(blob))
-    return blob
+    // delete imageData._doc.image
+    return binaryData
+    // return { ...imageData._doc, data: binaryData }
   }
 
   update(id: number, updateImageDto: UpdateImageDto) {
