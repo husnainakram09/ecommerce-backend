@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document, ObjectId } from "mongoose";
+import { Document } from "mongoose";
 
 export type ProductDocument = Product & Document
 
@@ -15,6 +15,8 @@ export class Product {
     description: string
     @Prop({ required: true })
     featured: boolean
+    @Prop({ required: true })
+    code: string
     @Prop({ required: false })
     oldPrice?: string
 }

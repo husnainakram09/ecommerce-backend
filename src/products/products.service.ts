@@ -4,7 +4,6 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Product, ProductDocument } from './schema/products';
-import { HttpService } from '@nestjs/axios';
 import { ImageService } from 'src/image/image.service';
 
 @Injectable()
@@ -38,6 +37,7 @@ export class ProductsService {
   }
 
   update(id: string | number, updateProductDto: UpdateProductDto) {
+    console.log(updateProductDto)
     return `This action updates a #${id} product`;
   }
 

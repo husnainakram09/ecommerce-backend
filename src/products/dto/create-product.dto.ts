@@ -1,5 +1,3 @@
-import { ObjectId } from "mongoose"
-
 export class CreateProductDto {
     name: string
     price: string
@@ -7,4 +5,5 @@ export class CreateProductDto {
     description: string
     featured: boolean
     oldPrice?: string
+    code: string
 }
