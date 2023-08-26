@@ -15,8 +15,8 @@ export class Product {
     description: string
     @Prop({ required: true })
     featured: boolean
-    @Prop({ required: true })
-    code: string
+    @Prop({ required: false })
+    code?: string
     @Prop({ required: false })
     oldPrice?: string
 }

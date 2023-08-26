@@ -5,5 +5,5 @@ export class CreateProductDto {
     description: string
     featured: boolean
     oldPrice?: string
-    code: string
+    code?: string
 }
