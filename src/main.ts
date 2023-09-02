@@ -12,7 +12,7 @@ async function bootstrap() {
   dotenv.config(); // Load environment variables from .env file
   // const app = await NestFactory.create(AppModule);
   const expressApp = express.default();
-  const app = await NestFactory.create<NestExpressApplication>(
+  const app = await NestFactory.create(
     AppModule,
     new ExpressAdapter(expressApp),
   );
@@ -23,7 +23,7 @@ async function bootstrap() {
     credentials: true, // Enable credentials (cookies, authorization headers)
   };
   app.enableCors(corsOptions); // Apply CORS to the app
-  app.useStaticAssets(path.join(__dirname, "../uploads"))
+  // app.useStaticAssets(path.join(__dirname, "../uploads"))
   // Multer configuration
   const storage = multer.memoryStorage(); // Store images in memory
   const upload = multer.default({ storage });
