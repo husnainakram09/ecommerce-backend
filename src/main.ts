@@ -1,14 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ExpressAdapter } from '@nestjs/platform-express';
+import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
 import * as express from 'express';
 import * as multer from 'multer';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
+import path from 'path';
 
 async function bootstrap() {
   // const app = await NestFactory.create(AppModule);
   const expressApp = express.default();
-  const app = await NestFactory.create(
+  const app = await NestFactory.create<NestExpressApplication>(
     AppModule,
     new ExpressAdapter(expressApp),
   );
@@ -19,7 +20,7 @@ async function bootstrap() {
     credentials: true, // Enable credentials (cookies, authorization headers)
   };
   app.enableCors(corsOptions); // Apply CORS to the app
-
+  app.useStaticAssets(path.join(__dirname, "../uploads"))
   // Multer configuration
   const storage = multer.memoryStorage(); // Store images in memory
   const upload = multer.default({ storage });
