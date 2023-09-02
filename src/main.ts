@@ -5,8 +5,11 @@ import * as express from 'express';
 import * as multer from 'multer';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import path from 'path';
+import * as dotenv from 'dotenv';
+
 
 async function bootstrap() {
+  dotenv.config(); // Load environment variables from .env file
   // const app = await NestFactory.create(AppModule);
   const expressApp = express.default();
   const app = await NestFactory.create<NestExpressApplication>(
@@ -27,6 +30,6 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(upload.any()); // Use multer interceptor
 
-  await app.listen(4000);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
