@@ -27,22 +27,23 @@ export class ProductsController {
 
     return finalName;
   }
+  // , {
+  //   storage: diskStorage({
+  //     destination: "./uploads",
+  //     filename: (req, file: any, cb) => {
+  //       const timestamp = Date.now();
+  //       const randomString = Math.random().toString(36).substring(2, 8);
+  //       const uniqueName = `${timestamp}_${randomString}_${file.originalname}`;
+  //       // console.log(`${req.body.id}.${file.mimetype.split("/")[1]}`)
+  //       cb(null, uniqueName)
+  //     }
+  //   })
+  // }
   @Post()
-  @UseInterceptors(FileInterceptor('image', {
-    storage: diskStorage({
-      destination: "./uploads",
-      filename: (req, file: any, cb) => {
-        const timestamp = Date.now();
-        const randomString = Math.random().toString(36).substring(2, 8);
-        const uniqueName = `${timestamp}_${randomString}_${file.originalname}`;
-        // console.log(`${req.body.id}.${file.mimetype.split("/")[1]}`)
-        cb(null, uniqueName)
-      }
-    })
-  })) // 'image' corresponds to the field name in your FormData
-  async create(@UploadedFile() image, @Body() createProductDto: any) {
+  @UseInterceptors(FileInterceptor('image')) // 'image' corresponds to the field name in your FormData
+  async create(@Body() createProductDto: any) {
     // if (image) {
-    createProductDto.image = image.filename
+    // createProductDto.image = image.filename
     // const res: any = await this.imageService.create({ image: image.buffer, originalname: image.originalname, mimetype: image.mimetype })
     // const res: any = await this.imageService.create({ image: image, id: 1245667 })
     //   createProductDto.image = res._id; // Store the image buffer in your DTO
