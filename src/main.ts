@@ -8,11 +8,11 @@ import path from 'path';
 
 async function bootstrap() {
   // const app = await NestFactory.create(AppModule);
-  const expressApp = express.default();
+  // const expressApp = express.default();
   const app = await NestFactory.create<NestExpressApplication>(
-    AppModule,
-    new ExpressAdapter(expressApp),
+    AppModule
   );
+  // new ExpressAdapter(expressApp),
 
   const corsOptions: CorsOptions = {
     origin: '*', // List of allowed origins
@@ -22,10 +22,10 @@ async function bootstrap() {
   app.enableCors(corsOptions); // Apply CORS to the app
   app.useStaticAssets(path.join(__dirname, "../uploads"))
   // Multer configuration
-  const storage = multer.memoryStorage(); // Store images in memory
-  const upload = multer.default({ storage });
+  // const storage = multer.memoryStorage(); // Store images in memory
+  // const upload = multer.default({ storage });
 
-  app.useGlobalInterceptors(upload.any()); // Use multer interceptor
+  // app.useGlobalInterceptors(upload.any()); // Use multer interceptor
 
   await app.listen(4000);
 }
