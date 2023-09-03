@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UnauthorizedExceptio
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
+import { Token } from './schema/token';
+import { LoginAuthDto } from './dto/login-auth.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -9,11 +11,15 @@ export class AuthController {
 
   @Post('signup')
   async create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.create(createAuthDto);
+    const user = await this.authService.create(createAuthDto);
+    if (typeof user == 'string') {
+      throw new UnauthorizedException(user);
+    }
+    return user
   }
 
   @Post('login')
-  async login(@Body() loginDto: { username: string, password: string }): Promise<{ accessToken: string }> {
+  async login(@Body() loginDto: LoginAuthDto): Promise<Token> {
     const user = await this.authService.validateUser(loginDto.username, loginDto.password);
     if (user == "unauthorized") {
       throw new UnauthorizedException('Invalid credentials');
