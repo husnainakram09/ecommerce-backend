@@ -34,9 +34,9 @@ export class AuthService {
   }
 
   async create(createAuthDto: CreateAuthDto): Promise<User | string> {
-    if ((await this.userModel.find({ username: createAuthDto.username })).length == 0) {
+    if ((await this.userModel.find({ username: createAuthDto.username })).length > 0) {
       return "username already exists"
-    } else if ((await this.userModel.find({ email: createAuthDto.email })).length == 0) {
+    } else if ((await this.userModel.find({ email: createAuthDto.email })).length > 0) {
       return "email already exists"
     }
     const hashedPassword = await bcrypt.hash(createAuthDto.password, 10);
