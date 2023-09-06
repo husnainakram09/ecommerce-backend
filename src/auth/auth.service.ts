@@ -42,7 +42,7 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(createAuthDto.password, 10);
     createAuthDto.password = hashedPassword
     const model = new this.userModel(createAuthDto)
-    return model
+    return model.save()
   }
 
   findAll() {
