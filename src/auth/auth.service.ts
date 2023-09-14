@@ -15,8 +15,8 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) { }
 
-  async validateUser(username: string, password: string): Promise<User | string | null> {
-    const user: any = await this.userModel.findOne({ username }).exec();
+  async validateUser(email: string, password: string): Promise<User | string | null> {
+    const user: any = await this.userModel.findOne({ email }).exec();
     if (!user) {
       return null
     }
@@ -28,8 +28,13 @@ export class AuthService {
 
   async login(user: any): Promise<Token> {
     const payload = { sub: user.id };
-    const accessToken = this.jwtService.sign(payload);
-    const token = new this.tokenModel({ accessToken, username: user.username })
+    const accessToken = this.jwtService.sign(
+      payload,
+      {
+        expiresIn: "24h",
+      }
+    );
+    const token = new this.tokenModel({ accessToken, email: user.email, userId: user?._id || user.id })
     return token.save()
   }
 

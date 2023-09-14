@@ -6,4 +6,5 @@ export class CreateProductDto {
     featured: boolean
     oldPrice?: string
     code?: string
+    createdAt: Date
 }

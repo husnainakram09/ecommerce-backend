@@ -4,7 +4,8 @@ export class LoginAuthDto {
     @IsString()
     @IsNotEmpty()
     password: string
+
     @IsString()
     @IsNotEmpty()
-    username: string
+    email: string
 }
